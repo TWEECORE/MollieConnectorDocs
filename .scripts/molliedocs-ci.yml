@@ -1,0 +1,116 @@
+trigger:
+- master
+- gh-pages
+
+pool:
+  vmImage: windows-latest
+
+steps:
+
+- task: PowerShell@2
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  inputs:
+    targetType: 'inline'
+    script: |
+      # Write your PowerShell commands here.
+      Write-Host ' - - - - - - - - - - - - - - - - - - - - - - - - -'
+      Write-Host ' reflect Azure Devops repo changes to GitHub repo'
+      Write-Host ' - - - - - - - - - - - - - - - - - - - - - - - - - '
+      git config --global user.email "martin@tweecore.de"
+      git config --global user.name "Matthias Martin"
+      $stageDir = '$(Build.SourcesDirectory)' | Split-Path
+      $githubDir = $stageDir +"\"+"gitHub"
+      #please provide your username
+      $alias = 'TCMatthiasMartin:'+ "$(GithubPAT)"
+      #Please make sure, you remove https from azure-repo-clone-url
+      $sourceURL = 'https://$(AzurePAT)@dev.azure.com/tweecore/MollieConnectorDocs/_git/MollieConnectorDocs'
+      #Check if the parent directory exists and delete
+      if((Test-Path -path $githubDir))
+      {
+        Remove-Item -Path $githubDir -Recurse -force
+      }
+      if(!(Test-Path -path $githubDir))
+      {
+        New-Item -ItemType directory -Path $githubDir
+        Set-Location $githubDir
+        git clone $sourceURL 
+        Set-Location .\MollieConnectorDocs
+        git pull 
+      }
+      else
+      {
+        Write-Host "The given folder path $githubDir already exists";
+      }
+      $actualPath = Get-Location
+      $tempPath = "$actualPath\docfx.zip"
+      Write-Output '*****Download DocFx****'
+      wget https://github.com/dotnet/docfx/releases/download/v2.58/docfx.zip -outfile $tempPath
+      $tempPath = $actualPath
+      Write-Output '*****DocFx downloaded****'
+      New-Item -ItemType directory -Path "$tempPath\docfx"
+      Expand-Archive -LiteralPath "$actualPath\docfx.zip" -DestinationPath "$tempPath\docfx"
+      Set-Location "$tempPath\docfx"
+      Write-Output ===== RUN DOCFX =====
+      .\docfx.exe build "$actualPath\docfx.json"
+      Set-Location $actualPath
+      Remove-Item –Path "$tempPath\docfx" –recurse
+      Remove-Item -Path "$tempPath\docfx.zip"
+      git stash
+      git checkout -b gh-pages
+      git stash apply
+      git add --all
+      git commit -m "Build gh-pages" 
+      git push --force origin gh-pages
+  displayName: 'CheckOut'
+
+
+- task: PowerShell@2
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/gh-pages'))
+  inputs:
+    targetType: 'inline'
+    script: |
+      # Write your PowerShell commands here.
+      Write-Host ' - - - - - - - - - - - - - - - - - - - - - - - - -'
+      Write-Host ' reflect Azure Devops repo changes to GitHub repo'
+      Write-Host ' - - - - - - - - - - - - - - - - - - - - - - - - - '
+      $stageDir = '$(Build.SourcesDirectory)' | Split-Path
+      $githubDir = $stageDir +"\"+"gitHub"
+      #please provide your username
+      $alias = 'TCMatthiasMartin:'+ "$(GithubPAT)"
+
+      $sourceURL = 'https://$(AzurePAT)@dev.azure.com/tweecore/MollieConnectorDocs/_git/MollieConnectorDocs'
+      $destURL = 'https://' + $alias + '@github.com/TWEECORE/MollieConnectorDocs.git'
+      $destination = $githubDir +"\"+"MollieConnectorDocs"
+ 
+      #Check if the parent directory exists and delete
+      if((Test-Path -path $githubDir))
+      {
+        Remove-Item -Path $githubDir -Recurse -force
+      }
+      if(!(Test-Path -path $githubDir))
+      {
+        New-Item -ItemType directory -Path $githubDir
+        Set-Location $githubDir 
+        git clone --single-branch --branch gh-pages $sourceURL 
+      }
+      else
+      {
+        Write-Host "The given folder path $githubDir already exists";
+      }
+      Set-Location $destination
+      Write-Output '*****Git removing remote secondary****'
+      git remote rm secondary
+      Write-Output '*****Git remote add****'
+      git remote add --mirror=fetch secondary $destURL
+      Write-Output '*****Git fetch origin****'
+      git remote update
+      git fetch --all
+      Write-Output '*****Git push secondary****'
+      git push --force secondary gh-pages
+      Write-Output '**Azure Devops repo synced with Github repo**'
+      Set-Location $stageDir
+      if((Test-Path -path $githubDir))
+      {
+       Remove-Item -Path $githubDir -Recurse -force
+      }
+  displayName: 'Push'
