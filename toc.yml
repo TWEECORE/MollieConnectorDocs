@@ -1,5 +1,4 @@
-- name: Articles
-  href: articles/
-- name: Api Documentation
-  href: api/
-  homepage: api/index.md
+- name: Impressum
+  href: https://www.heptacom.de/impressum/
+- name: Datenschutz
+  href: https://www.heptacom.de/datenschutz/
