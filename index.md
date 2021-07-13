@@ -11,7 +11,7 @@ In order to use the basic functionality - data exchange with Mollie - the necess
 
 <br>
 
-![alt text](/images/Setup.png "Setup")
+![alt text](./images/Setup.png "Setup")
 
 <br>
 
@@ -22,7 +22,7 @@ To start the import and further processing of the payment data, the "Mollie Paym
 
 <br>
 
-![alt text](/images/PaymentOverview.png "Setup")
+![alt text](./images/PaymentOverview.png "Setup")
 
 <br>
 
@@ -42,7 +42,7 @@ This page contains the following action buttons:
 
 <br>
 
-![alt text](/images/PAymentLinesProcessed.png "Setup")
+![alt text](./images/PAymentLinesProcessed.png "Setup")
 
 <br>
 
@@ -56,7 +56,7 @@ After importing the payment data from Mollie, the "Transfer Payment Lines" butto
 
 <br>
 
-![alt text](/images/transfer_paymentlines.png "Setup")
+![alt text](./images/transfer_paymentlines.png "Setup")
 
 <br>
 
@@ -64,7 +64,7 @@ The next step is to open the general journal defined in the Mollie setup. It now
 
 <br>
 
-![alt text](/images/Jnl_Match.png "Setup")
+![alt text](./images/Jnl_Match.png "Setup")
 
 <br>
 
