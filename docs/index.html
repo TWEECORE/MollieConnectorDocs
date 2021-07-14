@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Mollie Connector Documentation </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Mollie Connector Documentation ">
+    <meta name="generator" content="docfx 2.58.0.0">
+    
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <meta property="docfx:navrel" content="toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="mollie-connector-documentation"><strong>Mollie Connector Documentation</strong></h1>
+
+<h2 id="what-is-the-mollie-connector"><strong>What is the Mollie Connector?</strong></h2>
+<p>The Mollie Connector is an extension to request and process payment data received from the payment provider Mollie.</p>
+<br>
+<h2 id="new-objects"><strong>New Objects</strong></h2>
+<p>In order to use the basic functionality - data exchange with Mollie - the necessary API data must be filled in the Mollie setup.</p>
+<br>
+<p><img src="images/Setup.png" alt="alt text" title="Setup"></p>
+<br>
+<p>Furthermore, process-relevant information can be filled in the Payment area.
+The &quot;Test mode&quot; field is only intended for the use of Mollie test data. The button &quot;Automatic Payment Processing&quot; can be activated to process complete payments directly.</p>
+<p>To start the import and further processing of the payment data, the &quot;Mollie Payment Overview&quot; page has also been integrated.</p>
+<br>
+<p><img src="images/PaymentOverview.png" alt="alt text" title="PaymentOverview"></p>
+<br>
+<p>This page contains the following action buttons:</p>
+<ol>
+<li><p>Import Mollie Payments</p>
+<p>This button requests paid and credited payments from Mollie and creates one payment row per payment. Each import is represented with a new row in the payment overview.</p>
+</li>
+<li><p>Transfer Payment Lines</p>
+<p>This button checks the imported payment lines, searches for related invoices (using the external document number from Mollie) and transfers them to a general journal, defined in the Mollie setup.</p>
+</li>
+<li><p>Open Payment Lines</p>
+<p>This button opens a new overview page that displays more information about the related payment information of the import.</p>
+</li>
+</ol>
+<br>
+<p><img src="images/PaymentLinesProcessed.png" alt="alt text" title="PaymentLines"></p>
+<br>
+<p>The Mollie payment line page displays in detail all the payment information received from Mollie. It also offers the function to reinsert already received payments into the general journal by clicking on the &quot;Reset processed&quot; button.</p>
+<br>
+<h2 id="invoice-assignment"><strong>Invoice assignment</strong></h2>
+<p>After importing the payment data from Mollie, the &quot;Transfer Payment Lines&quot; button on the &quot;Mollie Payment Overview&quot; page must be pressed. This takes over all payment lines that are not marked as &quot;Processed&quot; into a general journal. If possible the corresponding invoices will be assigned, via &quot;External Order No.&quot;.</p>
+<br>
+<p><img src="images/transfer_paymentlines.png" alt="alt text" title="TransferLines"></p>
+<br>
+<p>The next step is to open the general journal defined in the Mollie setup. It now contains all the imported payments and credit memos.</p>
+<br>
+<p><img src="images/Jnl_Match.png" alt="alt text" title="GenJournal"></p>
+<br>
+<p>A new field &quot;Payment data match&quot; indicates whether a Business Central document could be assigned and whether the amounts match.</p>
+<p>The Payment Data Match field can contain the following values:</p>
+<ul>
+<li><p>Complete</p>
+<p>The document was found and the amounts are within an acceptable tolerance range - This row can be posted directly.</p>
+</li>
+<li><p>Partial</p>
+<p>The document was found, but the amount variance is no longer within the tolerance range - This line must be cross-checked again so that the discrepancies can be resolved. The amount of the amount discrepancy is indicated in the Description field.</p>
+</li>
+<li><p>No match</p>
+<p>The document could not be found via the External document number - The Description field specifies the External document number that was not found in Business Central.</p>
+</li>
+</ul>
+<br>
+<h2 id="process-payments"><strong>Process payments</strong></h2>
+<p>Payment lines that are marked as &quot;Complete&quot; in the General Journal can be processed directly or will be automatically processed if the button &quot;Automatic Payment Processing&quot; in the Mollie setup is activated.</p>
+<p>All other lines have to be cross-checked and edited again.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://dev.azure.com/tweecore/MollieConnectorDocs/_git/MollieConnectorDocs?path=index.md&amp;version=GBmaster&amp;line=1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+                <script type="text/javascript" src="styles/toggle-theme.js"></script>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>
