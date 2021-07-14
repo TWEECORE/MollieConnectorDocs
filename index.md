@@ -1,11 +1,11 @@
-# Mollie Connector Documentation**.
-## What is the Mollie Connector?
+# **Mollie Connector Documentation**
+## **What is the Mollie Connector?**
 
 The Mollie Connector is an extension to request and process payment data received from the payment provider Mollie.
 
 <br>
 
-## New Objects
+## **New Objects**
 
 In order to use the basic functionality - data exchange with Mollie - the necessary API data must be filled in the Mollie setup.
 
@@ -22,7 +22,7 @@ To start the import and further processing of the payment data, the "Mollie Paym
 
 <br>
 
-![alt text](./images/PaymentOverview.png "Setup")
+![alt text](./images/PaymentOverview.png "PaymentOverview")
 
 <br>
 
@@ -42,7 +42,7 @@ This page contains the following action buttons:
 
 <br>
 
-![alt text](./images/PAymentLinesProcessed.png "Setup")
+![alt text](./images/PaymentLinesProcessed.png "PaymentLines")
 
 <br>
 
@@ -50,13 +50,13 @@ The Mollie payment line page displays in detail all the payment information rece
 
 <br>
 
-## Invoice assignment
+## **Invoice assignment**
 
 After importing the payment data from Mollie, the "Transfer Payment Lines" button on the "Mollie Payment Overview" page must be pressed. This takes over all payment lines that are not marked as "Processed" into a general journal. If possible the corresponding invoices will be assigned, via "External Order No.".
 
 <br>
 
-![alt text](./images/transfer_paymentlines.png "Setup")
+![alt text](./images/transfer_paymentlines.png "TransferLines")
 
 <br>
 
@@ -64,7 +64,7 @@ The next step is to open the general journal defined in the Mollie setup. It now
 
 <br>
 
-![alt text](./images/Jnl_Match.png "Setup")
+![alt text](./images/Jnl_Match.png "GenJournal")
 
 <br>
 
@@ -84,7 +84,7 @@ The Payment Data Match field can contain the following values:
 
 <br>
 
-## Process payments
+## **Process payments**
 
 Payment lines that are marked as "Complete" in the General Journal can be processed directly or will be automatically processed if the button "Automatic Payment Processing" in the Mollie setup is activated.
 
